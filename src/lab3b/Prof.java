@@ -6,8 +6,10 @@ package lab3b;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Observable;
 
-public class Prof {
+public class Prof  extends Observable 
+{
 	private String name;
 	private Date midtermDate;
 	private ArrayList<Student> students;
@@ -28,18 +30,24 @@ public class Prof {
 
 	public void setMidterm(Date date) {
 		this.midtermDate = date;
-		for(Student s: this.students){
+		/*for(Student s: this.students){
 			s.study(date);
 		}
-		ta.proctor(date);
+		ta.proctor(date);*/
+		
+		setChanged();
+		notifyObservers("midterm");
 	}
 	
 	public void postponeMidterm(Date date){
 		this.midtermDate = date;
-		for(Student s: this.students){
+		/*for(Student s: this.students){
 			s.party(date);
 		}
-		ta.postpone(date);
+		ta.postpone(date);*/
+		
+		this.setChanged();
+		this.notifyObservers("postpone");
 	}
 	
 	public void setTA(TeachingAssistant theTA){
@@ -57,11 +65,14 @@ public class Prof {
 		Student s = new Student("Homer");
 		Student s2 = new Student("Bart");
 		TeachingAssistant ta = new TeachingAssistant("Michael");
-	
-	
-		p.addStudent(s);
+	/*	p.addStudent(s);
 		p.addStudent(s2);
-		p.setTA(ta);
+		p.setTA(ta);*/
+	
+	
+		p.addObserver(s);
+		p.addObserver(s2);
+		p.addObserver(ta);
 	
 		Date midterm = new Date();
 		p.setMidterm(midterm);
