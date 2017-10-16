@@ -5,8 +5,10 @@ package lab3b;
  */
 
 import java.util.Date;
+import java.util.Observer;
+import java.util.Observable;
 
-public class TeachingAssistant {
+public class TeachingAssistant implements Observer {
 	private String name;
 	private Date midterm;
 
@@ -26,5 +28,16 @@ public class TeachingAssistant {
 	public void postpone(Date date){
 		this.midterm = date;
 		System.out.println(name + " : Now the midterm is on " + this.midterm);
+	}
+	
+	public void update(Observable o, Object arg) {
+		String updateis = (String) arg; 
+		if(updateis.equals("midterm")) {
+			Prof updater = (Prof) o;
+			proctor(updater.getMidterm());			
+		}else {
+			Prof p = (Prof) o;
+			postpone(p.getMidterm());
+		}
 	}
 }
