@@ -6,8 +6,11 @@ package lab3b;
  */
 
 import java.util.Date;
+import java.util.Observer;
+import java.util.Observable;
 
-public class Student{
+public class Student implements Observer
+{
 	private String name;
 	private Date midterm;
 
@@ -27,5 +30,18 @@ public class Student{
 	public void party(Date date){
 		this.midterm = date;
 		System.out.println(name + " : Alright! I get to party since my midterm isn't until " + this.midterm);
+	}
+	
+	public void update(Observable o, Object arg) {
+		String updateis = (String) arg; 
+		if(updateis.equals("midterm")) {
+			Prof updater = (Prof) o;
+			study(updater.getMidterm());			
+		}else {
+			Prof p = (Prof) o;
+			party(p.getMidterm());
+		}
+		
+		
 	}
 }
